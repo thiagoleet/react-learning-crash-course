@@ -1,24 +1,32 @@
+import { useState } from "react";
+
 import Post from "./Post";
+import NewPost from "./NewPost";
 import classes from "./PostsList.module.css";
 
 function PostsList() {
+  const [enteredBody, setEnteredBody] = useState("");
+  const [enteredAuthor, setEnteredAuthor] = useState("");
+
+  function bodyChangeHanlder(value) {
+    setEnteredBody(value);
+  }
+
+  function authorChangeHanlder(value) {
+    setEnteredAuthor(value);
+  }
+
   return (
-    <ul className={classes.posts}>
-      <Post author="Thiago" body="React.js is awesome!" />
-      <Post author="Fernando" body="Checkout the full course!" />
-      <Post author="Thiago" body="React.js is awesome!" />
-      <Post author="Fernando" body="Checkout the full course!" />
-      <Post author="Thiago" body="React.js is awesome!" />
-      <Post author="Fernando" body="Checkout the full course!" />
-      <Post author="Thiago" body="React.js is awesome!" />
-      <Post author="Fernando" body="Checkout the full course!" />
-      <Post author="Thiago" body="React.js is awesome!" />
-      <Post author="Fernando" body="Checkout the full course!" />
-      <Post author="Thiago" body="React.js is awesome!" />
-      <Post author="Fernando" body="Checkout the full course!" />
-      <Post author="Thiago" body="React.js is awesome!" />
-      <Post author="Fernando" body="Checkout the full course!" />
-    </ul>
+    <>
+      <NewPost
+        onBodyChange={bodyChangeHanlder}
+        onAuthorChange={authorChangeHanlder}
+      />
+      <ul className={classes.posts}>
+        <Post author={enteredAuthor} body={enteredBody} />
+        <Post author="Fernando" body="Checkout the full course!" />
+      </ul>
+    </>
   );
 }
 
