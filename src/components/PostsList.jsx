@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Post from "./Post";
 import NewPost from "./NewPost";
@@ -9,7 +9,28 @@ import classes from "./PostsList.module.css";
 function PostsList({ isPosting, onStopPosting }) {
   const [posts, setPosts] = useState([]);
 
+  useEffect(() => {
+    async function fetchPosts() {
+      const url = "http://localhost:8080/posts";
+      const response = await fetch(url);
+      const data = await response.json();
+
+      setPosts(data.posts);
+    }
+
+    fetchPosts();
+  }, []);
+
   function addPostHandler(postData) {
+    const url = "http://localhost:8080/posts";
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(postData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
     setPosts((existingPosts) => [postData, ...existingPosts]);
   }
 
